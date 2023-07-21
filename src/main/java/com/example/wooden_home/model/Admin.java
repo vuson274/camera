@@ -8,11 +8,13 @@ import java.sql.Date;
 @Data
 public class Admin {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String userName;
     private String email;
     private String password;
     private String phone;
+    private String image;
     private Date createAt;
 
     public Admin() {

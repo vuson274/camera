@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{homeCms}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="row" layout:fragment="content">
+        <div class="col-lg-12">
+            <h2>USER</h2>
+            <div class="text-right" >
+                <button class="btn btn-success" data-toggle="modal" data-target="#modalinsert"> Thêm</button>
+            </div>
+            <div><hr></div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="bang">
+                    <thead class="table">
+                    <tr>
+                        <th>Stt</th>
+                        <th>Tên</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Phone</th>
+                        <th>avatar</th>
+                        <th>Sửa</th>
+                        <th>Xoá</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><img width="150" src="" alt=""></td>
+                        <td>
+                            <button array="" id=""
+                                    stt="" name="edit" value="edit" class="edituser btn btn-primary"><i
+                                    class="fa fa-pencil-square-o">
+                            </i></i>
+                            </button>
+                        </td>
+                        <td><a class=" btn btn-primary" href=""><i class="fa fa-trash-o "></i></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- modal -->
+
+        <div class="modal fade" id="modalinsert" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="" method="POST" role="form" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <legend>Thêm thông tin User</legend>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="">Tên</label> <span id="errorname"></span>
+                                <input type="text" class="form-control" id="name" name="name" value="" onblur="checkname()"; Required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Email</label> <span id="erroremail"></span>
+                                <input type="text" class="form-control" id="email" name="email" value="" onblur="checkEmail();" Required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="">password</label> <span id="errorpassword"></span>
+                                <input type="password" class="form-control" id="password" name="password" value="" onblur="checkPass();" Required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">phone</label> <span id="errorphone"></span>
+                                <input type="number" class="form-control" id="phone" name="phone" value="" onblur="checkPhone();" Required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Hình ảnh</label> <span id="erroravatar"></span>
+                                <input type="file" class="form-control" id="avatar" name="avatar" value="" onkeyup="checkAvatar();" Required>
+                            </div>
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit"  name="insert" class="btn btn-primary">Thêm</button>
+                        </div>
+                    </form>
+
+                    <?php
+                        if (isset($_POST['insert'])) {
+                            $files = $_FILES['avatar'];
+                            $nameImg = time().$files['name'];
+                            move_uploaded_file($files['tmp_name'], '../assets/img/user/'.$nameImg);
+                        }
+                    ?>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- and modal -->
+
+        <div class="modal fade" id="modalupdate" >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="" method="post" role="form" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <legend>Sửa thông tin User</legend>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="">ID</label>
+                                <input type="text" class="form-control" id="eid" name="id" value="" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Tên</label> <span id="errorname"></span>
+                                <input type="text" class="form-control" id="ename" name="name" value="" onkeyup="checkname()"; Required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Email</label> <span id="erroremail"></span>
+                                <input type="text" class="form-control" id="eemail" name="email" value="" onkeyup="checkEmail();" Required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="">password</label>
+                                <input type="text" class="form-control" id="epassword" name="password" value="" Required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">phone</label> <span id="errorphone"></span>
+                                <input type="number" class="form-control" id="ephone" name="phone" value="" onkeyup="checkePhone();" Required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Level</label>
+                                <select id="elevel" name="level" class="form-control">
+                                    <option value="1">Admin</option>
+                                    <option value="0">Nhân viên</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">avatar</label> <span id="erroravatar"></span>
+                                <input type="text" class="form-control" id="eavatar" name="eavatar" value="" onkeyup="checkeAvatar();">
+                                <input type="file" id="uavatar" name="uavatar" Required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit"  name="update_user" class="btn btn-primary">Sửa</button>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragmentsCms::head">
+</head>
+<body>
+    <div id="wrapper">
+        <div th:replace="fragmentsCms::nav"></div>
+
+    <div id="page-wrapper">
+        <div class="container-fluid"  layout:fragment="content">
+            <!-- Content pages -->
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+    </div>
+    <th:block th:replace="fragmentsCms::script"></th:block>
+</body>
+</html>

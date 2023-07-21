@@ -9,11 +9,10 @@ import java.sql.Date;
 @Data
 public class Brands {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private Date createAt;
-    private boolean status;
 
     public Brands() {
     }
