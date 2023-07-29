@@ -20,7 +20,7 @@
     </div>
     <div><hr></div>
 
-    <div class="table-responsive">
+    <div class="table-responsive" style="text-align: center">
       <table class="table table-bordered table-hover table-striped" id="bang">
         <thead class="table">
         <tr>
@@ -51,7 +51,7 @@
   <div class="modal fade" id="modalinsert" >
     <div class="modal-dialog">
       <div class="modal-content">
-        <form th:action="@{/admin/categories/insert}" th:object="${categories}" method="post" role="form">
+        <form th:action="@{/admin/categories/insert}"  method="post" role="form">
           <div class="modal-header">
             <legend>Thêm thông tin loại sản phẩm</legend>
           </div>
@@ -63,7 +63,7 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             <button type="submit"  name="insert_categories" class="btn btn-primary">Thêm</button>
           </div>
         </form>
@@ -94,7 +94,7 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             <button type="submit"  name="update_categories" class="btn btn-primary">Sửa</button>
           </div>
         </form>

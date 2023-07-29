@@ -19,4 +19,21 @@ public class Admin {
 
     public Admin() {
     }
+
+    public Admin(int id, String userName, String email, String password, String phone, String image) {
+        this.id = id;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.image = image;
+    }
+
+    public Admin(String userName, String email, String password, String phone, String image) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.image = image;
+    }
 }

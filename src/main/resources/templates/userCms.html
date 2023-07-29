@@ -13,6 +13,8 @@
     <div class="row" layout:fragment="content">
         <div class="col-lg-12">
             <h2>USER</h2>
+            <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+            <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
             <div class="text-right" >
                 <button class="btn btn-success" data-toggle="modal" data-target="#modalinsert"> Thêm</button>
             </div>
@@ -24,7 +26,6 @@
                         <th>Stt</th>
                         <th>Tên</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Phone</th>
                         <th>avatar</th>
                         <th>Sửa</th>
@@ -32,21 +33,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><img width="150" src="" alt=""></td>
+                    <tr th:each="admin, state :${listAdmin}">
+                        <td th:utext="${state.count}"></td>
+                        <td th:utext="${admin.userName}"></td>
+                        <td th:utext="${admin.email}"></td>
+                        <td th:utext="${admin.phone}"></td>
+                        <td><img width="150" style="display: block; margin-left: 20%" th:src="@{'/getimage/'+ ${admin.image}}" alt=""></td>
                         <td>
-                            <button array="" id=""
-                                    stt="" name="edit" value="edit" class="edituser btn btn-primary"><i
-                                    class="fa fa-pencil-square-o">
-                            </i></i>
+                            <button name="edit" value="edit" class="edituser btn btn-primary"
+                            th:attr="data-id=${admin.id}, data-name =${admin.userName}, data-email= ${admin.email},
+                             data-phone= ${admin.phone}">
+                                <i class="fa fa-pencil-square-o"></i>
                             </button>
                         </td>
-                        <td><a class=" btn btn-primary" href=""><i class="fa fa-trash-o "></i></a></td>
+                        <td><a class=" btn btn-primary" th:href="@{/admin/user/delete/{id}(id = ${admin.id})}" onclick="deleteuser();"><i class="fa fa-trash-o "></i></a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -58,7 +58,7 @@
         <div class="modal fade" id="modalinsert" >
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="" method="POST" role="form" enctype="multipart/form-data">
+                    <form th:action="@{/admin/user/insertOrUpdate}"  method="POST"  th:object="${AdminDTO}" role="form" enctype="multipart/form-data">
                         <div class="modal-header">
                             <legend>Thêm thông tin User</legend>
                         </div>
@@ -66,46 +66,37 @@
 
                             <div class="form-group">
                                 <label for="">Tên</label> <span id="errorname"></span>
-                                <input type="text" class="form-control" id="name" name="name" value="" onblur="checkname()"; Required>
+                                <input type="text" class="form-control"  id="name" name="userName" th:field="*{userName}"  value="" onblur="checkname()"; Required />
                             </div>
 
                             <div class="form-group">
                                 <label for="">Email</label> <span id="erroremail"></span>
-                                <input type="text" class="form-control" id="email" name="email" value="" onblur="checkEmail();" Required>
+                                <input type="text" class="form-control"  id="email" name="email" th:field="*{email}" value="" onblur="checkEmail();" Required>
                             </div>
 
 
                             <div class="form-group">
                                 <label for="">password</label> <span id="errorpassword"></span>
-                                <input type="password" class="form-control" id="password" name="password" value="" onblur="checkPass();" Required>
+                                <input type="password" class="form-control" id="password" name="password"  th:field="*{password}" value="" onblur="checkPass();" Required>
                             </div>
 
                             <div class="form-group">
                                 <label for="">phone</label> <span id="errorphone"></span>
-                                <input type="number" class="form-control" id="phone" name="phone" value="" onblur="checkPhone();" Required>
+                                <input type="number" class="form-control" id="phone" name="phone" th:field="*{phone}" value="" onblur="checkPhone();" Required>
                             </div>
 
                             <div class="form-group">
                                 <label for="">Hình ảnh</label> <span id="erroravatar"></span>
-                                <input type="file" class="form-control" id="avatar" name="avatar" value="" onkeyup="checkAvatar();" Required>
+                                <input type="file" class="form-control" id="image" name="image" th:field="*{image}" value="" onchange="checkAvatar();" Required>
                             </div>
-
 
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                             <button type="submit"  name="insert" class="btn btn-primary">Thêm</button>
                         </div>
                     </form>
-
-                    <?php
-                        if (isset($_POST['insert'])) {
-                            $files = $_FILES['avatar'];
-                            $nameImg = time().$files['name'];
-                            move_uploaded_file($files['tmp_name'], '../assets/img/user/'.$nameImg);
-                        }
-                    ?>
                 </div>
 
             </div>
@@ -116,63 +107,57 @@
         <div class="modal fade" id="modalupdate" >
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="" method="post" role="form" enctype="multipart/form-data">
+                    <form th:action="@{/admin/user/insertOrUpdate}"  th:object="${AdminDTO}" method="post" role="form" enctype="multipart/form-data">
                         <div class="modal-header">
                             <legend>Sửa thông tin User</legend>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="">ID</label>
-                                <input type="text" class="form-control" id="eid" name="id" value="" readonly>
+                                <input type="text" class="form-control" id="eid" name="id"  value="" readonly>
                             </div>
 
                             <div class="form-group">
-                                <label for="">Tên</label> <span id="errorname"></span>
-                                <input type="text" class="form-control" id="ename" name="name" value="" onkeyup="checkname()"; Required>
+                                <label for="">Tên</label> <span id="errorename"></span>
+                                <input type="text" class="form-control" id="ename" name="userName"  th:field="*{userName}" onblur="checkename()"; Required>
                             </div>
 
                             <div class="form-group">
-                                <label for="">Email</label> <span id="erroremail"></span>
-                                <input type="text" class="form-control" id="eemail" name="email" value="" onkeyup="checkEmail();" Required>
+                                <label for="">Email</label> <span id="erroreemail"></span>
+                                <input type="text" class="form-control" id="eemail" name="email"  th:field="*{email}" value="" onblur="checkeEmail();" Required>
                             </div>
 
 
                             <div class="form-group">
-                                <label for="">password</label>
-                                <input type="text" class="form-control" id="epassword" name="password" value="" Required>
+                                <label for="">password</label><span id="errorepassword"></span>
+                                <input type="text" class="form-control" id="epassword" name="password"  th:field="*{password}" onblur="checkePass();" Required>
                             </div>
 
                             <div class="form-group">
-                                <label for="">phone</label> <span id="errorphone"></span>
-                                <input type="number" class="form-control" id="ephone" name="phone" value="" onkeyup="checkePhone();" Required>
+                                <label for="">phone</label> <span id="errorephone"></span>
+                                <input type="number" class="form-control" id="ephone" name="phone"  th:field="*{phone}" value="" onblur="checkePhone();" Required>
                             </div>
 
                             <div class="form-group">
-                                <label for="">Level</label>
-                                <select id="elevel" name="level" class="form-control">
-                                    <option value="1">Admin</option>
-                                    <option value="0">Nhân viên</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">avatar</label> <span id="erroravatar"></span>
-                                <input type="text" class="form-control" id="eavatar" name="eavatar" value="" onkeyup="checkeAvatar();">
-                                <input type="file" id="uavatar" name="uavatar" Required>
+                                <label for="">Hình ảnh</label> <span id="erroreavatar"></span>
+                                <input type="file" class="form-control" id="eimage" name="image" th:field="*{image}" onchange="checkeAvatar();" value="">
                             </div>
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                             <button type="submit"  name="update_user" class="btn btn-primary">Sửa</button>
 
                         </div>
                     </form>
+                    <?php
+                    ?>
                 </div>
 
             </div>
         </div>
 
-    </div>
+
+</div>
 </body>
 </html>

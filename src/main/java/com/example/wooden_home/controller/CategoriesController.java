@@ -2,6 +2,7 @@ package com.example.wooden_home.controller;
 
 import com.example.wooden_home.model.Categories;
 import com.example.wooden_home.repositories.CategoriesRepository;
+import com.example.wooden_home.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,10 +19,10 @@ import java.util.Optional;
 @Controller
 public class CategoriesController {
    @Autowired
-    private CategoriesRepository categoriesRepository;
+    CategoryService categoryService;
     @GetMapping("/admin/categories")
     public String listCategories(ModelMap modelMap){
-        modelMap.addAttribute("categories", categoriesRepository.findAll());
+        modelMap.addAttribute("categories", categoryService.findAll());
         return "categoriesCms";
     }
     @PostMapping("/admin/categories/insert")
@@ -30,7 +31,7 @@ public class CategoriesController {
             return "redirect:/admin/categories" ;
         }
         try{
-            categoriesRepository.save(categories);
+            categoryService.save(categories);
             attributes.addFlashAttribute("success", "Thêm thành công");
             return "redirect:/admin/categories" ;
         } catch (Exception e) {
@@ -43,11 +44,11 @@ public class CategoriesController {
     public String updateCategory(ModelMap modelMap, @ModelAttribute("categories") Categories categories, RedirectAttributes attributes){
        try{
            modelMap.addAttribute("category",categories);
-           categoriesRepository.save(categories);
-           attributes.addFlashAttribute("success", "Thêm thành công");
+           categoryService.save(categories);
+           attributes.addFlashAttribute("success", "Sửa thành công");
            return "redirect:/admin/categories" ;
        } catch (Exception e) {
-           attributes.addFlashAttribute("error", "Thêm thất bại");
+           attributes.addFlashAttribute("error", "Sửa thất bại");
            return "redirect:/admin/categories" ;
        }
     }

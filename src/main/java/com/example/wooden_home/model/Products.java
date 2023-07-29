@@ -37,4 +37,35 @@ public class Products {
 
     public Products() {
     }
+
+    public Products(Categories category, Brands brand, String name, String origin, String mainImage, String secondImage, float price, int quantity, String description, int sale, float salePrice, Date createAt) {
+        this.category = category;
+        this.brand = brand;
+        this.name = name;
+        this.origin = origin;
+        this.mainImage = mainImage;
+        this.secondImage = secondImage;
+        this.price = price;
+        this.quantity = quantity;
+        this.description = description;
+        this.sale = sale;
+        this.salePrice = salePrice;
+        this.createAt = createAt;
+    }
+
+    public Products(int id, Categories category, Brands brand, String name, String origin, String mainImage, String secondImage, float price, int quantity, String description, int sale, float salePrice, Date createAt) {
+        this.id = id;
+        this.category = category;
+        this.brand = brand;
+        this.name = name;
+        this.origin = origin;
+        this.mainImage = mainImage;
+        this.secondImage = secondImage;
+        this.price = price;
+        this.quantity = quantity;
+        this.description = description;
+        this.sale = sale;
+        this.salePrice = salePrice;
+        this.createAt = createAt;
+    }
 }
