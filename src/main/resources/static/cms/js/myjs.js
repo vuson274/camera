@@ -156,12 +156,17 @@ function checkAvatar() {
     var fileSize = avatar.files[0].size;
     var fileType = avatar.files[0].type;
     var erroravatar = document.getElementById('erroravatar');
-    if( fileSize > 1048576) {
-        erroravatar.innerHTML = 'Dung lượng ảnh không được vượt quá 1MB';
-    }else if (fileType != 'image/png' || fileType != 'image/jpeg'){
-        erroravatar.innerHTML = 'Vui lòng chọn file jpg, png';
+    if( fileSize < 1048576) {
+        switch (fileType) {
+            case 'image/png':
+            case 'image/jpeg':
+                erroravatar.innerHTML = '';
+                break;
+            default:
+                erroravatar.innerHTML = 'Vui lòng chọn file jpg, png';
+        }
     } else {
-        erroravatar.innerHTML = '';
+        erroravatar.innerHTML = 'Dung lượng ảnh không được vượt quá 1MB';
     }
 
 };
@@ -413,8 +418,3 @@ function checkeImageSecond(){
         errorsecond.innerHTML = 'Dung lượng ảnh không được vượt quá 1MB';
     }
 }
-
-// xóa admin
-function deleteuser(){
-    confirm("Bạn có thật sự muốn xóa");
-};

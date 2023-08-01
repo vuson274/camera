@@ -25,4 +25,23 @@ public class News {
 
     public News() {
     }
+
+    public News(Admin admin, String title, String description, String content, String image, Date createAt) {
+        this.admin = admin;
+        this.title = title;
+        this.description = description;
+        this.content = content;
+        this.image = image;
+        this.createAt = createAt;
+    }
+
+    public News(int id, Admin admin, String title, String description, String content, String image, Date createAt) {
+        this.id = id;
+        this.admin = admin;
+        this.title = title;
+        this.description = description;
+        this.content = content;
+        this.image = image;
+        this.createAt = createAt;
+    }
 }

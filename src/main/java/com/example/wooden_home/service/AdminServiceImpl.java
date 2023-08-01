@@ -1,6 +1,5 @@
 package com.example.wooden_home.service;
 
-import com.example.wooden_home.dto.AdminDTO;
 import com.example.wooden_home.model.Admin;
 import com.example.wooden_home.repositories.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,4 +73,8 @@ public class AdminServiceImpl implements AdminService{
         adminRepository.deleteAll();
     }
 
+    @Override
+    public Optional<Admin> findAdminByEmail(String email) {
+        return adminRepository.findAdminByEmail(email);
+    }
 }

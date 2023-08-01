@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{homeCms}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="row" layout:fragment="content">
+    <div class="col-md-12">
+        <h2>BÀI VIẾT</h2>
+        <form th:action="@{/user/insertOrUpdate}" method="post" th:object="${newsDTO}" role="form" id="forms_md_user" enctype="multipart/form-data">
+            <div id="show_form_add">
+
+                <div class="form-group">
+                    <label for="">Tiêu đề:</label>
+                    <input type="text"   th:field="*{title}" name="title" class="form-control title" value="" Required>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Người viết</label>
+                    <select  th:field="*{admin}" name="admin" id="" class="form-control">
+                        <option th:each="ad: ${admin}" th:value="${ad.id}" th:utext="${ad.userName}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Ảnh đại diện:
+                        <span></span>
+                    </label>
+                    <input type="file"  accept="image/png, image/jpg, image/jpeg" th:field="*{image}" class="form-control main_img" value="" name="image" Required>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Mô tả nhanh</label>
+                    <textarea class="form-control content "  th:field="*{description}" name="description" id="" rows="5" Required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Chi tiết bài viết:</label>
+                    <textarea class="form-control ckeditor"   th:field="*{content}" name="content" id="ckeditor" rows="10" Required></textarea>
+                </div>
+
+                <button type="submit" id="add_news" name="add_news" value="" class="btn btn-info">Thêm bài viết</button>
+                <a th:href="@{/admin/news}" class="btn btn-danger">Trở lại</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -23,11 +23,8 @@ import java.util.Optional;
 public class AdminController {
     @Autowired
     AdminService adminService;
-    @GetMapping("/login")
-    public String login(){
-        return "loginCms";
-    }
-    @GetMapping("")
+
+    @GetMapping("/dashboard")
     public String home(){
         return "dashboardCms";
     }
@@ -52,6 +49,7 @@ public class AdminController {
         String secretKey = "Aa@123";
         String pass = AES.encrypt(password, secretKey);
         Optional<Admin> optionalAdmin = adminService.findById(id);
+        Optional<Admin> adminOptional = adminService.findAdminByEmail(email);
         String image = "logo1.jpg";
         Path path = Paths.get("uploads");
         if(optionalAdmin.isPresent()){
@@ -71,19 +69,22 @@ public class AdminController {
                attributes.addFlashAttribute("error", "Sửa thất bại");
            }
         }else {
-            if (!img.isEmpty()){
-               try{
-                   InputStream inputStream = img.getInputStream();
-                   Files.copy(inputStream, path.resolve(img.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-                   image =img.getOriginalFilename().toString();
-                   Admin admin = new Admin(name, email, pass, phone,  image);
-                   adminService.save(admin);
-                   attributes.addFlashAttribute("success", "Thêm thành công");
-               } catch (Exception e) {
-                   attributes.addFlashAttribute("error", "Thêm thất bại");
-               }
+            if (adminOptional.isPresent()){
+                attributes.addFlashAttribute("error", "Email đã được đăng ký");
+            } else {
+                if (!img.isEmpty()){
+                    try{
+                        InputStream inputStream = img.getInputStream();
+                        Files.copy(inputStream, path.resolve(img.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+                        image =img.getOriginalFilename().toString();
+                        Admin admin = new Admin(name, email, pass, phone,  image);
+                        adminService.save(admin);
+                        attributes.addFlashAttribute("success", "Thêm thành công");
+                    } catch (Exception e) {
+                        attributes.addFlashAttribute("error", "Thêm thất bại");
+                    }
+                }
             }
-
         }
         return "redirect:/admin/user";
     }

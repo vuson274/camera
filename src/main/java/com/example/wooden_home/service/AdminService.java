@@ -29,4 +29,6 @@ public interface AdminService {
     void deleteAll(List<Admin> entities);
 
     void deleteAll();
+
+    Optional<Admin> findAdminByEmail(String email);
 }
