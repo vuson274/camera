@@ -1,8 +1,6 @@
 package com.example.wooden_home.controller;
 
 import com.example.wooden_home.model.Brands;
-import com.example.wooden_home.model.Categories;
-import com.example.wooden_home.repositories.BrandsRepository;
 import com.example.wooden_home.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

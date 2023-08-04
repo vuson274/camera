@@ -26,7 +26,25 @@ public class ImageController {
                 return ResponseEntity.ok()
                         .contentLength(buffer.length)
                         .contentType(MediaType.parseMediaType("image/jpg"))
-                        .contentType(MediaType.parseMediaType("image/png"))
+                        .body(byteArrayResource);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @RequestMapping(value = "getsystemimage/{image}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<ByteArrayResource> getSystemImage(@PathVariable("image") String image ){
+        if (!image.equals("") || image != null){
+            try{
+                Path filename = Paths.get("src/main/resources/static/cms/images",image);
+                byte[] buffer = Files.readAllBytes(filename);
+                ByteArrayResource byteArrayResource = new ByteArrayResource(buffer);
+                return ResponseEntity.ok()
+                        .contentLength(buffer.length)
+                        .contentType(MediaType.parseMediaType("image/jpg"))
                         .body(byteArrayResource);
             } catch (Exception e) {
                 throw new RuntimeException(e);

@@ -3,8 +3,6 @@ package com.example.wooden_home.dto;
 import com.example.wooden_home.model.Brands;
 import com.example.wooden_home.model.Categories;
 import com.example.wooden_home.model.Orders;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
