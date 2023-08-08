@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Moon Light</title>
+  <style>
+    .product__details__text{
+      color: #fff;
+    }
+    .product__details__text p{
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="product_detail" layout:fragment="content">
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="breadcrumb__links">
+              <a th:href="@{/home}"><i class="fa fa-home"></i>Trang chủ</a>
+              <a th:href="@{/shop}" th:text="${productDetail.get().category.name}"></a>
+              <span th:text="${productDetail.get().name}"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="product__details__pic">
+              <div class="product__details__pic__left product__thumb nice-scroll">
+                <a class="pt active" href="#product-1">
+                  <img th:src="@{'/getimage/'+ ${productDetail.get().mainImage}}" alt="">
+                </a>
+                <a class="pt" href="#product-2">
+                  <img th:src="@{'/getimage/'+ ${productDetail.get().secondImage}}" alt="">
+                </a>
+              </div>
+              <div class="product__details__slider__content">
+                <div class="product__details__pic__slider owl-carousel">
+                  <img data-hash="product-1" class="product__big__img" th:src="@{'/getimage/'+ ${productDetail.get().mainImage}}" alt="">
+                  <img data-hash="product-2" class="product__big__img" th:src="@{'/getimage/'+ ${productDetail.get().mainImage}}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="product__details__text">
+              <h3 th:text="${productDetail.get().name}"></h3>
+              <div th:utext="${productDetail.get().description}"></div>
+              <div>
+                <p th:text = "'Thương hiệu: '+ ${productDetail.get().brand.name}" ></p>
+                <p th:if="${productDetail.get().origin}" th:text="'Xuất xứ: '+ ${productDetail.get().origin}"></p>
+              </div>
+              <div class="product__details__price" th:text="${#numbers.formatDecimal(productDetail.get().price, 0, 'COMMA', 0, 'POINT')} + đ"></div>
+              <div class="product__details__button">
+                <a href="#order" class="cart-btn" th:id="${productDetail.get().id}"><span class="icon_bag_alt"></span> Thêm giỏ hàng</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <div class="related__title">
+              <h5>SẢN PHẨM TƯƠNG TỰ</h5>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-sm-6" th:each="relateProduct: ${listRelateProduct}">
+            <div class="product__item">
+              <div class="product__item__pic set-bg" th:data-setbg="'/getimage/'+ ${relateProduct.mainImage}">
+                <ul class="product__hover">
+                  <li><a href="#detail" data-toggle="modal" data-target="#detail" class="detail" th:id="${relateProduct.id}"><span class="fa fa-eye"></span></a></li>
+                  <li><a class="heart" th:id="${relateProduct.id}"><span class="icon_heart_alt"></span></a></li>
+                  <li><a href="#order" class="order" th:id="${relateProduct.id}"><span class="icon_bag_alt"></span></a></li>
+                </ul>
+              </div>
+              <div class="product__item__text">
+                <h6><a th:href="@{/product/{id}(id = ${relateProduct.id})}" th:text="${relateProduct.name}"></a></h6>
+                <div class="product__price" th:text="${#numbers.formatDecimal(relateProduct.price, 0, 'COMMA', 0, 'POINT')} + đ"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Product Details Section End -->
+
+<!--    <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--      <div class="modal-dialog modal-lg ">-->
+<!--        <div class="modal-content">-->
+<!--          <div class="modal-header">-->
+<!--            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>-->
+<!--            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--              <span aria-hidden="true">&times;</span>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--          <div class="modal-body">-->
+<!--            <div class="container">-->
+<!--              <div class="row">-->
+<!--                <div class="col-md-6" id="imgDetail">-->
+<!--                  <img src="" alt="">-->
+<!--                </div>-->
+<!--                <div class="col-md-6" style="text-align: center; position:relative;">-->
+<!--                  <h3></h3><br>-->
+<!--                  <h4></h4><br>-->
+<!--                  <div class="product__details__button">-->
+
+<!--                    <a href="#order" class="cart-btn" id="" style="position:absolute; left: 20%;"><span class="icon_bag_alt"></span> Add to cart</a>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+  </div>
+</body>
+</html>

@@ -350,10 +350,11 @@ function checkImageMain(){
         switch (typeMain) {
             case 'image/png':
             case 'image/jpeg':
+            case 'image/webp':
                 errormain.innerHTML = '';
                 break;
             default:
-                errormain.innerHTML = 'Vui lòng chọn file jpg, png';
+                errormain.innerHTML = 'Vui lòng chọn file jpg, png, webp';
         }
     } else {
         errormain.innerHTML = 'Dung lượng ảnh không được vượt quá 1MB';
@@ -370,10 +371,11 @@ function checkImageSecond(){
         switch (typeSecond) {
             case 'image/png':
             case 'image/jpeg':
+            case 'image/webp':
                 errorsecond.innerHTML = '';
                 break;
             default:
-                errorsecond.innerHTML = 'Vui lòng chọn file jpg, png';
+                errormain.innerHTML = 'Vui lòng chọn file jpg, png, webp';
         }
     } else {
         errorsecond.innerHTML = 'Dung lượng ảnh không được vượt quá 1MB';
@@ -389,10 +391,11 @@ function checkeImageMain(){
         switch (typeMain) {
             case 'image/png':
             case 'image/jpeg':
+            case 'image/webp':
                 errormain.innerHTML = '';
                 break;
             default:
-                errormain.innerHTML = 'Vui lòng chọn file jpg, png';
+                errormain.innerHTML = 'Vui lòng chọn file jpg, png, webp';
         }
     } else {
         errormain.innerHTML = 'Dung lượng ảnh không được vượt quá 1MB';
@@ -409,10 +412,11 @@ function checkeImageSecond(){
         switch (typeSecond) {
             case 'image/png':
             case 'image/jpeg':
+            case 'image/webp':
                 errorsecond.innerHTML = '';
                 break;
             default:
-                errorsecond.innerHTML = 'Vui lòng chọn file jpg, png';
+                errormain.innerHTML = 'Vui lòng chọn file jpg, png, webp';
         }
     } else {
         errorsecond.innerHTML = 'Dung lượng ảnh không được vượt quá 1MB';

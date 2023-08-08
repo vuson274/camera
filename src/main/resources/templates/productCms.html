@@ -11,227 +11,59 @@
 </head>
 <body>
   <div class="row" layout:fragment="content">
-  <div class="col-lg-12">
-    <h2>SẢN PHẨM</h2>
-    <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
-    <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
-    <div class="text-right">
-
-      <button class="btn btn-success" data-toggle="modal" data-target="#modalinsert"> Thêm</button>
-    </div>
-    <div>
+    <div class="col-lg-12">
+      <h2>SẢN PHẨM</h2>
+      <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+      <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+      <div class="text-right">
+      <a th:href="@{/product/create}" class="btn btn-success">Thêm</a>
+      </div>
+      <div>
       <hr>
-    </div>
+      </div>
 
-    <div class="table-responsive">
+      <div class="table-responsive">
       <table class="table table-bordered table-hover table-striped" id="bang">
-        <thead class="table">
-        <tr>
-          <th>Stt</th>
-          <th>Tên sản phẩm</th>
-          <th>Loại sản phẩm</th>
-          <th>Nhãn hàng</th>
-          <th>Xuất xứ</th>
-          <th>Ảnh sản phẩm</th>
-          <th>Giá</th>
-          <th>Số lượng</th>
-          <th>Mô tả</th>
-          <th>Giảm giá</th>
-          <th>Giá sau giảm</th>
-          <th>Sửa</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="product, state : ${listProducts}">
-          <td th:utext="${state.count}"></td>
-          <td th:utext="${product.name}"></td>
-          <td th:utext="${product.category.name}"></td>
-          <td th:utext="${product.brand.name}"></td>
-          <td th:utext="${product.origin}"></td>
-          <td>
-            <img width="150"  th:src="@{'/getimage/'+ ${product.mainImage}}" alt="">
-          </td>
-          <td th:utext="${product.price}"></td>
-          <td th:utext="${product.quantity}"></td>
-          <td th:utext="${product.description}"></td>
-          <td th:utext="${product.sale}"></td>
-          <td th:utext="${product.salePrice}"></td>
-          <td>
-            <button th:attr="data-id = ${product.id}, data-category = ${product.category.id}, data-brand = ${product.brand.id},
-                    data-name = ${product.name}, data-orrigin = ${product.origin}, data-price= ${product.price},
-                    data-quantity = ${product.quantity}, data-des = ${product.description}, data-sale = ${product.sale}, data-salePrice = ${product.salePrice}"
-                    name="edit" value="edit" class="editproduct btn btn-primary"><i
-                    class="fa fa-pencil-square-o">
-            </i></i>
-            </button>
-          </td>
-        </tr>
-        </tbody>
+      <thead class="table">
+      <tr>
+        <th>Stt</th>
+        <th>Tên sản phẩm</th>
+        <th>Loại sản phẩm</th>
+        <th>Nhãn hàng</th>
+        <th>Xuất xứ</th>
+        <th>Ảnh sản phẩm</th>
+        <th>Giá</th>
+        <th>Số lượng</th>
+        <th>Mô tả</th>
+        <th>Giảm giá</th>
+        <th>Giá sau giảm</th>
+        <th>Sửa</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="product, state : ${listProducts}">
+        <td th:utext="${state.count}"></td>
+        <td th:utext="${product.name}"></td>
+        <td th:utext="${product.category.name}"></td>
+        <td th:utext="${product.brand.name}"></td>
+        <td th:utext="${product.origin}"></td>
+        <td>
+          <img width="150"  th:src="@{'/getimage/'+ ${product.mainImage}}" alt="">
+        </td>
+      <!--          <td th:utext="${product.price}"></td>-->
+        <td th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')}"></td>
+        <td th:utext="${product.quantity}"></td>
+        <td th:utext="${product.description}"></td>
+        <td th:utext="${product.sale}"></td>
+        <td th:text="${#numbers.formatDecimal(product.salePrice, 0, 'COMMA', 0, 'POINT')}"></td>
+        <td>
+          <a class="btn btn-primary" th:href="@{/editproduct/{id}(id = ${product.id})}"><i class="fa fa-pencil-square-o"></i></i></a>
+        </td>
+      </tr>
+      </tbody>
       </table>
-    </div>
-  </div>
-
-  <!-- modal Thêm -->
-
-  <div class="modal fade" id="modalinsert">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form th:action="@{/admin/product/insertOrUpdate}"  th:object="${ProductsDTO}" method="post" role="form" enctype="multipart/form-data">
-          <div class="modal-header">
-            <legend>Thêm thông tin sản phẩm</legend>
-          </div>
-
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="">Tên sản phẩm</label> <span id="errorname"></span>
-              <input type="text" class="form-control" id="name" name="name"  th:field="*{name}" value="" onblur="checkname();" Required>
-            </div>
-
-            <div class="form-group">
-              <label for="">Loại sản phẩm</label>
-              <select  th:field="*{category}" id="category" name="category" class="form-control" >
-                <option  th:each="category: ${Categories}" th:value="${category.id}" th:utext="${category.name}"></option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="">Nhà cung cấp</label>
-              <select th:field="*{brand}" id="brand" name="brand" class="form-control">
-                <option  th:each="brand : ${Brands}"  th:value="${brand.id}" th:utext="${brand.name}" ></option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="">Xuất xứ</label> <span id="errororigin"></span>
-              <input type="text" class="form-control" id="origin" name="origin" th:field="*{origin}" value="" onblur="checkOrigin();" Required>
-            </div>
-
-            <div class="form-group">
-              <label for="">Ảnh chính</label><span id="errormain"></span>
-              <input type="file" class="form-control" id="mainImage" name="mainImage" th:field="*{mainImage}"  onchange="checkImageMain();" value="" Required>
-            </div>
-
-            <div class="form-group">
-              <label for="">Ảnh phụ</label><span id="errorsecond"></span>
-              <input type="file" class="form-control" id="secondImage" name="secondImage" th:field="*{secondImage}" onchange="checkImageSecond();" value="" Required>
-            </div>
-
-            <div class="form-group">
-              <label for="">Giá</label> <span id="errorprice"></span>
-              <input type="number" class="form-control" id="price" name="price"  th:field="*{price}" value="" onblur="checkPrice();" Required>
-            </div>
-
-            <div class="form-group">
-              <label for="">Số lượng</label> <span id="errorquantity"></span>
-              <input type="number" class="form-control" id="quantity" name="quantity" th:field="*{quantity}" value="" onblur="checkQuantity();" Required>
-            </div>
-
-
-            <div class="form-group">
-              <label for="">Mô tả</label>
-              <textarea  class="form-control" id="description" name="description" th:field="*{description}" value="" ></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="">Giảm giá</label><span id="errorsale"></span>
-              <input type="number" class="form-control" id="sale" name="sale" th:field="*{sale}"  onblur="checkSale();" value="" Required >
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" name="insert_product" class="btn btn-primary">Thêm</button>
-          </div>
-        </form>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Sửa  -->
-
-  <div class="modal fade" id="modalupdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form th:action="@{/admin/product/insertOrUpdate}" method="post"  th:object="${ProductsDTO}" role="form" enctype="multipart/form-data">
-          <div class="modal-header">
-            <legend>Sửa thông tin sản phẩm</legend>
-          </div>
-
-          <div class="modal-body">
-
-            <div class="form-group">
-              <label for="">ID</label>
-              <input type="text" class="form-control" id="eid" name="id"  th:field="*{id}" value="" readonly>
-            </div>
-
-            <div class="form-group">
-              <label for="">Tên sản phẩm</label> <span id="errorename"></span>
-              <input type="text" class="form-control" id="ename" name="name" value="" onblur="checkename();" Required>
-            </div>
-
-            <div class="form-group">
-              <label for="">Loại sản phẩm</label>
-              <select  th:field="*{category}" id="ecategory" name="category" class="form-control" >
-                <option  th:each="category: ${Categories}" th:value="${category.id}" th:utext="${category.name}"></option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="">Nhà cung cấp</label>
-              <select th:field="*{brand}" id="ebrand" name="brand" class="form-control">
-                <option  th:each="brand : ${Brands}"  th:value="${brand.id}" th:utext="${brand.name}"  ></option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="">Xuất xứ</label> <span id="erroreorigin"></span>
-              <input type="text" class="form-control" id="eorigin" name="origin" th:field="*{origin}" value="" onblur="checkeOrigin();" Required>
-            </div>
-
-            <div class="form-group">
-              <label for="">Ảnh chính</label><span id="erroremain"></span>
-              <input type="file" class="form-control" id="emainImage" name="mainImage" th:field="*{mainImage}"  onchange="checkeImageMain();" value="" >
-            </div>
-
-            <div class="form-group">
-              <label for="">Ảnh phụ</label><span id="erroresecond"></span>
-              <input type="file" class="form-control" id="esecondImage" name="secondImage" th:field="*{secondImage}" onchange="checkeImageSecond();" value="" >
-            </div>
-
-            <div class="form-group">
-              <label for="">Giá</label> <span id="erroreprice"></span>
-              <input type="text" class="form-control" id="eprice" name="price" onblur="checkePrice();" value="" Required>
-            </div>
-
-            <div class="form-group">
-              <label for="">Số lượng</label> <span id="errorequantity"></span>
-              <input type="text" class="form-control" id="equantity" name="quantity" value="" onblur="checkeQuantity();" Required>
-            </div>
-
-            <div class="form-group">
-              <label for="">Mô tả</label>
-              <textarea  class="form-control" id="edescription" name="description" th:field="*{description}" value="" ></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="">Giảm giá</label><span id="erroresale"></span>
-              <input type="number" class="form-control" id="esale" name="sale" th:field="*{sale}"  onblur="checkeSale();" value="" Required >
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" name="update_product">Sửa</button>
-          </div>
-        </form>
-
       </div>
     </div>
   </div>
-
-
-
-</div>
 </body>
 </html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{homeCms}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="row" layout:fragment="content">
+        <div class="col-md-12">
+            <h2>Thêm sản phẩm</h2>
+            <form th:action="@{/admin/product/insertOrUpdate}"  th:object="${ProductsDTO}" method="post" role="form" enctype="multipart/form-data">
+                <div id="show_form_add">
+                    <div class="form-group">
+                        <label for="">Tên sản phẩm</label> <span id="errorname"></span>
+                        <input type="text" class="form-control" id="name" name="name"  th:field="*{name}" value="" onblur="checkname();" Required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Loại sản phẩm</label>
+                        <select  th:field="*{category}" id="category" name="category" class="form-control" >
+                            <option  th:each="category: ${Categories}" th:value="${category.id}" th:utext="${category.name}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Nhà cung cấp</label>
+                        <select th:field="*{brand}" id="brand" name="brand" class="form-control">
+                            <option  th:each="brand : ${Brands}"  th:value="${brand.id}" th:utext="${brand.name}" ></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Xuất xứ</label> <span id="errororigin"></span>
+                        <input type="text" class="form-control" id="origin" name="origin" th:field="*{origin}" value="" onblur="checkOrigin();" Required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Ảnh chính</label><span id="errormain"></span>
+                        <input type="file" class="form-control" id="mainImage" name="mainImage" th:field="*{mainImage}"  onchange="checkImageMain();" value="" Required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Ảnh phụ</label><span id="errorsecond"></span>
+                        <input type="file" class="form-control" id="secondImage" name="secondImage" th:field="*{secondImage}" onchange="checkImageSecond();" value="" Required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Giá</label> <span id="errorprice"></span>
+                        <input type="number" class="form-control" id="price" name="price"  th:field="*{price}" value="" onblur="checkPrice();" Required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Số lượng</label> <span id="errorquantity"></span>
+                        <input type="number" class="form-control" id="quantity" name="quantity" th:field="*{quantity}" value="" onblur="checkQuantity();" Required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="">Mô tả</label>
+                        <textarea  class="form-control ckeditor" id="ckeditor" name="description" th:field="*{description}" value="" ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Giảm giá</label><span id="errorsale"></span>
+                        <input type="number" class="form-control" id="sale" name="sale" th:field="*{sale}"  onblur="checkSale();" value="" Required >
+                    </div>
+                    <button type="submit" id="add_product" name="add_product" value="" class="btn btn-info">Thêm sản phẩm</button>
+                    <a th:href="@{/admin/product}" class="btn btn-danger">Trở lại</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
