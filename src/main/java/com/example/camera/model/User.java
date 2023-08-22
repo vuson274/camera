@@ -18,9 +18,19 @@ public class User {
     private String phone;
     private String address;
     private Date dateOfBirth;
-    private boolean sex;
     private Date createAt;
 
     public User() {
+    }
+
+    public User(String userName, String password, String name, String email, String phone, String address, Date dateOfBirth, Date createAt) {
+        this.userName = userName;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.createAt = createAt;
     }
 }

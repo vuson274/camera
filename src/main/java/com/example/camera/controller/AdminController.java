@@ -4,6 +4,8 @@ import com.example.camera.config.AES;
 import com.example.camera.dto.AdminDTO;
 import com.example.camera.model.Admin;
 import com.example.camera.service.AdminService;
+import com.example.camera.service.ProductService;
+import com.example.camera.service.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,9 +25,15 @@ import java.util.Optional;
 public class AdminController {
     @Autowired
     AdminService adminService;
+    @Autowired
+    ProductService productService;
+    @Autowired
+    UserSevice userSevice;
 
     @GetMapping("/dashboard")
-    public String home(){
+    public String home(ModelMap modelMap){
+        modelMap.addAttribute("countPro", productService.count());
+        modelMap.addAttribute("countMemner", userSevice.count());
         return "dashboardCms";
     }
 

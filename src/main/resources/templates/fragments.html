@@ -23,9 +23,9 @@
     <link rel="stylesheet" th:href="@{../web/css/styleBanner.css}" type="text/css">
 </head>
 <body>
-<div id="preloder">
-    <div class="loader"></div>
-</div>
+<!--<div id="preloder">-->
+<!--    <div class="loader"></div>-->
+<!--</div>-->
 <div class="offcanvas-menu-overlay"></div>
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__close">+</div>
@@ -34,12 +34,12 @@
             <li><a href="#"><span class="icon_heart_alt"></span>
                     <div class="tip">2</div>
                 </a></li>
-            <li><a href="index.php?page=shop-cart"><span class="icon_bag_alt"></span>
+            <li><a href="#"><span class="icon_bag_alt"></span>
                 <div class="tip">2</div>
             </a></li>
         </ul>
         <div class="offcanvas__logo">
-            <a href="./index.php"><img th:src="@{'/getsystemimageweb/logo2.png'}" alt=""></a>
+            <a href="#"><img th:src="@{'/getsystemimageweb/logo2.png'}" alt=""></a>
         </div>
         <div id="mobile-menu-wrap">
             <div class="slicknav_menu"><a href="#" aria-haspopup="true" role="button" tabindex="0"
@@ -70,28 +70,35 @@
                             <li><a th:href="@{/shop}">Cửa hàng</a></li>
                             <li><a th:href="@{/blog}">Bài viết</a></li>
                             <li><a th:href="@{/contact}">Liên hệ</a></li>
+                            <li><a th:href="@{/warranty}">Bảo hành</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3" style="padding: 0; margin: 0">
 
                     <div class="header__right">
-                        <div class="header__right__auth">
-                            <a href="admin/Login/index.php">Đăng nhập</a>
+                        <div class="header__right__auth" th:if="${session.member == null}">
+                            <a th:href="@{/login}">Đăng nhập</a>
                         </div>
                         <ul class="header__right__widget">
+                            <li  th:if="${session.member}">
+                                <a href="#" th:text="${session.member}" style="color: #fff;"></a>
+                                <ul>
+                                    <li><a th:href="@{/logoutMember}" onclick ="return confirm ('bạn có thật sự muốn đăng xuất?');">Đăng xuất</a></li>
+                                </ul>
+                            </li>
                             <li>
                                 <span class="icon_search search-switch"></span>
                             </li>
                             <li>
-                                <a href="index.php?page=favorite"><span class="icon_heart_alt" style="color: #fff"></span>
+                                <a th:href="@{/favoriteList}"><span class="icon_heart_alt" style="color: #fff"></span>
                                     <div id="heart">
-                                        <div class="tip" id="like">2</div>
+                                        <div class="tip" id="like"  th:if="${session.myLikeItems}" th:text="${session.myLikeNum}"></div>
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a href="index.php?page=shop-cart">
+                                <a href="#">
                                     <span class="icon_bag_alt" style="color: #fff"></span>
                                     <div id="carts">
                                         <div class="tip" id="bag-carts">2</div>
@@ -108,8 +115,10 @@
         </div>
         </div>
     </header>
+    <section class="bg1">
     <!-- Header Section End -->
-    <div layout:fragment="content"></div>
+    <div layout:fragment="content">
+    </div>
     <!-- Instagram Begin -->
     <div class="instagram">
         <div class="container-fluid">
@@ -185,13 +194,12 @@
     <div class="search-model">
         <div class="h-100 d-flex align-items-center justify-content-center">
             <div class="search-close-switch">+</div>
-            <form class="search-model-form" id="form_search" action="product-deatails.php" method="post">
+            <form class="search-model-form" id="form_search" method="post">
                 <input type="text" name="name" id="search_input" placeholder="Tìm kiếm sản phẩm .....">
             </form>
         </div>
         <div id="show_search" style="">
             <div class="list-group" id="show-list" style="overflow: auto;height: 500px;">
-                <!-- Here autocomplete list will be display -->
             </div>
         </div>
     </div>

@@ -7,7 +7,15 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Moon Light</title>
+  <style>
+    .proDes p{
+      color: #0b0b0b;
+    }
+    .proDes li{
+      text-align: left;
+    }
+  </style>
 </head>
 <body>
   <div layout:fragment="content">
@@ -40,7 +48,7 @@
                   <div class="accordion" id="accordionExample">
                     <div class="card" th:each="category:${listCategories}">
                       <div class="card-heading ">
-                        <a th:data-filter="${category.name}" th:text="${category.name}"></a>
+                        <a th:data-filter="'.'+ 'pro'+${category.id}+'cat'" th:text="${category.name}"></a>
                       </div>
                     </div>
                   </div>
@@ -50,12 +58,7 @@
           </div>
           <div class="col-lg-9 col-md-9">
             <div class="row property__gallery">
-<!--              <?php-->
-<!--                        foreach($produc as $key => $value){-->
-<!--              $count = count($value);-->
-<!--              ?>-->
-
-              <div class="col-lg-4 col-md-6 mix" th:each="product:${listProducts}">
+              <div th:class="'col-lg-3 col-md-4 col-sm-6 mix '+ 'pro'+${product.category.id}+'cat'" th:each="product:${listProducts.content}">
                 <div class="product__item">
                   <div class="product__item__pic set-bg" th:data-setbg="'/getimage/'+ ${product.mainImage}">
                     <ul class="product__hover">
@@ -73,22 +76,12 @@
                   </div>
                 </div>
               </div>
-              <!-- Phân trang -->
-<!--              <?php-->
-<!--                        $pagess = ceil($counttt/9);-->
-<!--                    ?>-->
-<!--              <div class="col-lg-12 text-center">-->
-<!--                <div class="pagination__option">-->
-<!--                  <?php-->
-<!--                                for ($i = 1; $i <= $pagess; $i++){-->
-<!--                            ?>-->
-<!--                  <a href="index.php?page=shop&pages=<?php echo $i; ?>"><?php echo $i; ?></a>-->
-<!--                  <?php-->
-<!--                                    }-->
-<!--                                ?>-->
-<!--                  <a href="index.php?pages=2"><i class="fa fa-angle-right"></i></a>-->
-<!--                </div>-->
-<!--              </div>-->
+              <!-- Phân trang  -->
+              <div class="col-lg-12 text-center">
+                <div class="pagination__option">
+                  <a  th:each="i: ${#numbers.sequence( 0, page,1)}" th:text="${i+1}" class="page" th:id="${i}" th:href="@{'/shop?p='+${i}}"></a>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -101,7 +94,7 @@
       <div class="modal-dialog modal-lg ">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Xem nhanh thông tin</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -112,12 +105,12 @@
                 <div class="col-md-6" id="imgDetail">
                   <img src="" alt="">
                 </div>
-                <div class="col-md-6" style="text-align: center; position:relative;">
+                <div class="col-md-6" style="text-align: center;">
                   <h3></h3><br>
+                  <div class="proDes"></div>
                   <h4></h4><br>
                   <div class="product__details__button">
-
-                    <a href="#order" class="cart-btn" id="" style="position:absolute; left: 20%;"><span class="icon_bag_alt"></span> Add to cart</a>
+                    <a href="#order" class="cart-btn" id="" style="float: none;"><span class="icon_bag_alt"></span>Thêm giỏ hàng</a>
                   </div>
                 </div>
               </div>

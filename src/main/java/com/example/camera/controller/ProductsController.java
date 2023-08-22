@@ -1,10 +1,8 @@
 package com.example.camera.controller;
 
-import com.example.camera.dto.NewsDTO;
 import com.example.camera.dto.ProductsDTO;
 import com.example.camera.model.Brands;
 import com.example.camera.model.Categories;
-import com.example.camera.model.News;
 import com.example.camera.model.Products;
 import com.example.camera.service.BrandService;
 import com.example.camera.service.CategoryService;
@@ -34,7 +32,7 @@ public class ProductsController {
     BrandService brandService;
     @GetMapping("/admin/product")
     public String listProducts(ModelMap modelMap){
-        modelMap.addAttribute("listProducts", productService.findAll());
+        modelMap.addAttribute("listProducts", productService.findAllByOrderByIdDesc());
         return "productCms";
     }
 

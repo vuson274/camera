@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Moon Light</title>
+    <style>
+        p {
+            color: #0b0b0b;
+        }
+    </style>
+</head>
+<body>
+  <div layout:fragment="content">
+      <div class="breadcrumb-option">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12">
+                      <div class="breadcrumb__links">
+                          <a th:href="@{/home}"><i class="fa fa-home"></i>Home</a>
+                          <span>Sản phẩm yêu thích</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <h2 style="text-align: center;padding: 30px 0px; color: #fff">Sản Phẩm Yêu Thích</h2>
+      <div class="container">
+          <div class="row">
+              <div class="col-md-4" th:if="${session.myLikeItems}" th:each="like: ${session.myLikeItems}">
+                  <div class="product__item">
+                      <div class="product__item__pic set-bg" th:data-id="${like.getValue().id}"
+                           th:data-setbg="'/getimage/'+ ${like.getValue().mainImage}">
+                          <ul class="product__hover">
+                              <li><a href="#detail" data-toggle="modal" data-target="#detail" class="detail" th:id="${like.getValue().id}"><span class="fa fa-eye"></span></a></li>
+                              <li><a  class="delete" th:id="${like.getValue().id}"><span class="fa fa-trash" aria-hidden="true"></span></a></li>
+                              <li><a href="#"><span class="icon_bag_alt" type='buy'></span></a></li>
+                          </ul>
+                      </div>
+                      <div class="product__item__text">
+                          <h6>
+                              <a th:href="@{/product/{id}(id = ${like.getValue().id})}" th:text="${like.getValue().name}"></a>
+                          </h6>
+                          <div class="product__price" th:text="${#numbers.formatDecimal(like.getValue().price, 0, 'COMMA', 0, 'POINT')} + đ"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg ">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Xem nhanh thông tin</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="container">
+                          <div class="row">
+                              <div class="col-md-6" id="imgDetail">
+                                  <img src="" alt="">
+                              </div>
+                              <div class="col-md-6" style="text-align: center;">
+                                  <h3></h3><br>
+                                  <div class="proDes"></div>
+                                  <h4></h4><br>
+                                  <div class="product__details__button">
+                                      <a href="#order" class="cart-btn" id="" style="float: none;"><span class="icon_bag_alt"></span>Thêm giỏ hàng</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</body>
+</html>

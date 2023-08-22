@@ -4,8 +4,11 @@ import com.example.camera.model.Categories;
 import com.example.camera.model.Products;
 import com.example.camera.repositories.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +38,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Iterable<Products> findAll() {
-        return productRepository.findAll();
+    public Iterable<Products> findAll(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
     @Override
@@ -97,5 +100,21 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public List<Products> findTop8ByCategoryOrderByIdDesc(Categories categories) {
         return productRepository.findTop8ByCategoryOrderByIdDesc(categories);
+    }
+
+    @Override
+    public List<Products> findByNameLike(String name) {
+        return productRepository.findByNameLike("%"+name+"%");
+    }
+
+    @Override
+    public List<Products> findByCreateAtBetween(Date from_date, Date to_date) {
+        return productRepository.findByCreateAtBetween(from_date, to_date);
+    }
+
+    @Override
+    @Query(nativeQuery = true, value = "SELECT * FROM products  ORDER BY id DESC LIMIT :from,20")
+    public List<Products> findByProOrderByIdDesc(Integer from) {
+        return productRepository.findByProOrderByIdDesc(from);
     }
 }

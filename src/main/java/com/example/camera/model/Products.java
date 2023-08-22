@@ -15,10 +15,10 @@ public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Categories category;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
     private Brands brand;
     private String name;
@@ -36,6 +36,15 @@ public class Products {
     private Date createAt;
 
     public Products() {
+    }
+
+    public Products(int id, String name, String mainImage, float price, String description, float salePrice) {
+        this.id = id;
+        this.name = name;
+        this.mainImage = mainImage;
+        this.price = price;
+        this.description = description;
+        this.salePrice = salePrice;
     }
 
     public Products(Categories category, Brands brand, String name, String origin, String mainImage, String secondImage, float price, int quantity, String description, int sale, float salePrice, Date createAt) {

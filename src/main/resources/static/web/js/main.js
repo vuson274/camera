@@ -234,28 +234,4 @@ Created: Colorib
         $(".size__btn label").removeClass('active');
         $(this).addClass('active');
     });
-    /*-------------------
-        Search
-    ---------------------*/
-    $("#search_input").keyup(function(){
-        $("#form_search").css({'position':'absolute','top':'120px'});
-        $("#show_search").css('margin-top','-530px');
-        let searchText = $(this).val();
-        // console.log(searchText);
-        if (searchText != "") {
-            $.ajax({
-            url: "assets/ajax/action.php",
-            method: "post",
-            data: {
-                query: searchText,
-            },
-            success: function (response) {
-                $("#show-list").html(response);
-            },
-            });
-        } else {
-            $("#show-list").html("");
-        }
-    })
-    
 })(jQuery);

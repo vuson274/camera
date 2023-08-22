@@ -6,6 +6,10 @@ import com.example.camera.model.News;
 import com.example.camera.service.AdminService;
 import com.example.camera.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +32,7 @@ public class NewsController {
     NewsService newsService;
     @GetMapping("/admin/news")
     public String listNews(ModelMap modelMap){
-        modelMap.addAttribute("news", newsService.findAll());
+        modelMap.addAttribute("news", newsService.findAllByOrderByIdDesc());
         return "newsCms";
     }
     @GetMapping("/news/create")
@@ -107,8 +111,11 @@ public class NewsController {
     }
 
     @GetMapping("/blog")
-    public String Blog(ModelMap modelMap){
-        modelMap.addAttribute("listBlogs", newsService.findAll());
+    public String Blog(ModelMap modelMap, @RequestParam("p") Optional<Integer> p){
+        Pageable pageable = PageRequest.of(p.orElse(0),6, Sort.by("id").descending());
+        Page<News> page = (Page<News>) newsService.findAll(pageable);
+        modelMap.addAttribute("page",Math.ceil(newsService.count()/6));
+        modelMap.addAttribute("listBlogs", page);
         return "blog";
     }
 

@@ -3,6 +3,7 @@ package com.example.camera.service;
 import com.example.camera.model.News;
 import com.example.camera.repositories.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,8 +35,8 @@ public class NewsServiceImpl implements NewsService{
     }
 
     @Override
-    public Iterable<News> findAll() {
-        return newsRepository.findAll();
+    public Iterable<News> findAll(Pageable pageable) {
+        return newsRepository.findAll(pageable);
     }
 
     @Override
@@ -76,5 +77,10 @@ public class NewsServiceImpl implements NewsService{
     @Override
     public List<News> findTop3ByOrderByCreateAtDesc() {
         return newsRepository.findTop3ByOrderByCreateAtDesc();
+    }
+
+    @Override
+    public List<News> findAllByOrderByIdDesc() {
+        return newsRepository.findAllByOrderByIdDesc();
     }
 }

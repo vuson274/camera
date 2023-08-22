@@ -422,3 +422,36 @@ function checkeImageSecond(){
         errorsecond.innerHTML = 'Dung lượng ảnh không được vượt quá 1MB';
     }
 }
+
+$(document).ready(function(){
+
+    $.datepicker.setDefaults({
+        dateFormat: 'yy-mm-dd'
+    });
+
+    $(function(){
+        $("#from_date").datepicker();
+        $("#to_date").datepicker();
+    });
+    $('#filter').click(function(){
+        var from_date = $('#from_date').val();
+        var to_date = $('#to_date').val();
+        if(from_date != '' && to_date != '')
+        {
+            $.ajax({
+                url:"/admin/filter",
+                method:"get",
+                data:{from_date:from_date, to_date:to_date},
+                success:function(data)
+                {
+                    $('#pro').html('<div className="huge" style="font-size: 40px;">'+data[0]+'</div><div>Product </div>');
+                    $('#member').html('<div className="huge" style="font-size: 40px;">'+data[1]+'</div><div>Member </div>');
+                }
+            });
+        }
+        else
+        {
+            alert("Please Select Date");
+        }
+    });
+});

@@ -8,6 +8,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Moon Light</title>
+    <style>
+        .proDes p{
+            color: #0b0b0b;
+        }
+        .proDes li{
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <div class="home" layout:fragment="content">
@@ -30,19 +38,18 @@
                   <div class="col-lg-8 col-md-8">
                       <ul class="filter__controls">
                           <li class="active" data-filter="*">All</li>
-                          <li th:each="category :${listCategories}" th:data-filter="${category.name}" th:text="${category.name}"></li>
+                          <li th:each="category :${listCategories}" th:data-filter="'.'+ 'pro'+${category.id}+'cat'" th:text="${category.name}"></li>
                       </ul>
                   </div>
               </div>
-              <div class="row property__gallery">
-                  <div  id="product" class="col-lg-3 col-md-4 col-sm-6 mix" th:each="product : ${listProducts}">
+              <div class="row property__gallery" id="page">
+                  <div  id="product"   th:each="product : ${listProducts.content}" th:class="'col-lg-3 col-md-4 col-sm-6 mix '+ 'pro'+${product.category.id}+'cat'">
                       <div class="product__item">
                           <div class="product__item__pic set-bg" th:data-id="${product.id}" th:data-setbg="'/getimage/'+ ${product.mainImage}">
                               <ul class="product__hover">
                                   <li><a href="#detail" data-toggle="modal" data-target="#detail" class="detail" th:id="${product.id}"><span class="fa fa-eye"></span></a></li>
                                   <li><a  class="heart" th:id="${product.id}"><span class="icon_heart_alt"></span></a></li>
-                                  <li><a href="#order" class="order" th:id="${product.id}"><span
-                                          class="icon_bag_alt" type='buy'></span></a></li>
+                                  <li><a href="#order" class="order" th:id="${product.id}"><span class="icon_bag_alt" type="buy"></span></a></li>
                               </ul>
                           </div>
                           <div class="product__item__text">
@@ -56,18 +63,11 @@
               </div>
           </div>
           <!-- Phân trang  -->
-<!--          <div class="col-lg-12 text-center">-->
-<!--              <div class="pagination__option">-->
-<!--                  <?php-->
-<!--                for ($i = 1; $i <= $pagess; $i++){-->
-<!--                    ?>-->
-<!--                  <a href="index.php?pages=<?php echo $i; ?>"> <?php echo $i; ?></a>-->
-<!--                  <?php-->
-<!--                }-->
-<!--                ?>-->
-<!--                  <a href="index.php?pages=2"><i class="fa fa-angle-right"></i></a>-->
-<!--              </div>-->
-<!--          </div>-->
+          <div class="col-lg-12 text-center">
+              <div class="pagination__option">
+                  <a  th:each="i: ${#numbers.sequence( 0, page,1)}" th:text="${i+1}" class="page" th:id="${i}" th:href="@{'/home?p='+${i}}"></a>
+              </div>
+          </div>
 
       </section>
       <!-- Product Section End -->
@@ -81,21 +81,21 @@
                                 <div class="banner__text">
                                     <span>The Moon Light Collection</span>
                                     <h1>The Project Telescope</h1>
-                                    <a href="index.php?page=shop">Shop now</a>
+                                    <a th:href="@{/shop}">Shop now</a>
                                 </div>
                             </div>
                             <div class="banner__item">
                                 <div class="banner__text">
                                     <span>The Moon Light Collection</span>
                                     <h1>The Project Camera</h1>
-                                    <a href="index.php?page=shop">Shop now</a>
+                                    <a th:href="@{/shop}">Shop now</a>
                                 </div>
                             </div>
                             <div class="banner__item">
                                 <div class="banner__text">
                                     <span>The Moon Light Collection</span>
                                     <h1>The Project Accessory</h1>
-                                    <a href="index.php?page=shop">Shop now</a>
+                                    <a th:href="@{/shop}">Shop now</a>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="trend__item__text">
                                     <h6>
-                                        <a href="" th:text="${productNew.name}"></a>
+                                        <a th:href="@{/product/{id}(id = ${productNew.id})}" th:text="${productNew.name}"></a>
                                     </h6>
                                     <div class="product__price" th:text="${#numbers.formatDecimal(productNew.price, 0, 'COMMA', 0, 'POINT')} + đ"></div>
                                 </div>
@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="trend__item__text">
                                     <h6>
-                                        <a href="" th:text="${productHot.name}"></a>
+                                        <a th:href="@{/product/{id}(id = ${productHot.id})}" th:text="${productHot.name}"></a>
                                     </h6>
                                     <div class="product__price" th:text="${#numbers.formatDecimal(productHot.price, 0, 'COMMA', 0, 'POINT')} + đ"></div>
                                 </div>
@@ -158,7 +158,7 @@
                                 </div>
                                 <div class="trend__item__text">
                                     <h6>
-                                        <a href="" th:text="${productHightClass.name}"></a>
+                                        <a th:href="@{/product/{id}(id = ${productHightClass.id})}" th:text="${productHightClass.name}"></a>
                                     </h6>
                                     <div class="product__price" th:text="${#numbers.formatDecimal(productHightClass.price, 0, 'COMMA', 0, 'POINT')} + đ"></div>
                                 </div>
@@ -170,6 +170,35 @@
             </div>
         </section>
         <!-- Trend Section End -->
+        <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Xem nhanh thông tin</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6" id="imgDetail">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="col-md-6" style="text-align: center;">
+                                    <h3></h3><br>
+                                    <div class="proDes"></div>
+                                    <h4></h4><br>
+                                    <div class="product__details__button">
+                                        <a href="#order" class="cart-btn" id="" style="float: none;"><span class="icon_bag_alt"></span>Thêm giỏ hàng</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
   </div>
 </body>
 </html>

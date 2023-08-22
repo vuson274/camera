@@ -35,6 +35,13 @@ public class News {
         this.createAt = createAt;
     }
 
+    public News(String title, String description, String content, String image) {
+        this.title = title;
+        this.description = description;
+        this.content = content;
+        this.image = image;
+    }
+
     public News(int id, Admin admin, String title, String description, String content, String image, Date createAt) {
         this.id = id;
         this.admin = admin;
