@@ -3,9 +3,8 @@ package com.example.camera.controller;
 import com.example.camera.config.AES;
 import com.example.camera.dto.AdminDTO;
 import com.example.camera.model.Admin;
-import com.example.camera.service.AdminService;
-import com.example.camera.service.ProductService;
-import com.example.camera.service.UserSevice;
+import com.example.camera.model.Order;
+import com.example.camera.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,10 +28,20 @@ public class AdminController {
     ProductService productService;
     @Autowired
     UserSevice userSevice;
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    CustomerService customerService;
 
     @GetMapping("/dashboard")
     public String home(ModelMap modelMap){
         modelMap.addAttribute("countPro", productService.count());
+        Double total = (double) 0;
+        for (Order order : orderService.findAll()) {
+            total += order.getTotalPrice();
+        }
+        modelMap.addAttribute("totalPrice", total);
+        modelMap.addAttribute("countOrder", orderService.count());
         modelMap.addAttribute("countMemner", userSevice.count());
         return "dashboardCms";
     }
@@ -103,4 +112,24 @@ public class AdminController {
         attributes.addFlashAttribute("success", "Xoá thành công");
         return "redirect:/admin/user";
     }
+
+    @GetMapping("/customer")
+    public String customer(ModelMap modelMap){
+        modelMap.addAttribute("listCustomer", customerService.findAll());
+        return "customerCms";
+    }
+
+    @GetMapping("/member")
+    public String member(ModelMap modelMap){
+        modelMap.addAttribute("listMember", userSevice.findAll());
+        return "memberCms";
+    }
+
+    @RequestMapping("/member/delete/{id}")
+    public String deleteMember(@PathVariable Integer id, RedirectAttributes attributes){
+        userSevice.deleteById(id);
+        attributes.addFlashAttribute("success", "Xoá thành công");
+        return "redirect:/admin/member";
+    }
+
 }

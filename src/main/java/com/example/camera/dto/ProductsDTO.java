@@ -1,8 +1,8 @@
 package com.example.camera.dto;
 
-import com.example.camera.model.Brands;
-import com.example.camera.model.Categories;
-import com.example.camera.model.Orders;
+import com.example.camera.model.Brand;
+import com.example.camera.model.Category;
+import com.example.camera.model.Order;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,8 +12,8 @@ import java.util.Set;
 @Data
 public class ProductsDTO {
     private int id;
-    private Categories category;
-    private Brands brand;
+    private Category category;
+    private Brand brand;
     private String name;
     private String origin;
     private MultipartFile mainImage;
@@ -23,7 +23,7 @@ public class ProductsDTO {
     private String description;
     private int sale;
     private float salePrice;
-    private Set<Orders> orders = new HashSet<Orders>();
+    private Set<Order> orders = new HashSet<Order>();
     private Date createAt;
 
     public ProductsDTO() {

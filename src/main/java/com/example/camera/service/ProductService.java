@@ -1,7 +1,7 @@
 package com.example.camera.service;
 
-import com.example.camera.model.Categories;
-import com.example.camera.model.Products;
+import com.example.camera.model.Category;
+import com.example.camera.model.Product;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,45 +10,45 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    Products save(Products entity);
+    Product save(Product entity);
 
-    List<Products> saveAll(List<Products> entities);
+    List<Product> saveAll(List<Product> entities);
 
-    Optional<Products> findById(Integer integer);
+    Optional<Product> findById(Integer integer);
 
     boolean existsById(Integer integer);
 
-    Iterable<Products> findAll(Pageable pageable);
+    Iterable<Product> findAll(Pageable pageable);
 
-    List<Products> findAllById(List<Integer> integers);
+    List<Product> findAllById(List<Integer> integers);
 
     long count();
 
     void deleteById(Integer integer);
 
-    void delete(Products entity);
+    void delete(Product entity);
 
     void deleteAllById(List<Integer> integers);
 
-    void deleteAll(List<Products> entities);
+    void deleteAll(List<Product> entities);
 
     void deleteAll();
 
-    Iterable<Products> findAllByOrderByIdDesc();
+    Iterable<Product> findAllByOrderByIdDesc();
 
-    List<Products> findTop5ByOrderByIdDesc();
+    List<Product> findTop5ByOrderByIdDesc();
 
-    List<Products> findTop5ByOrderByPriceDesc();
+    List<Product> findTop5ByOrderByPriceDesc();
 
-    List<Products> findTop5ByOrderByPriceAsc();
+    List<Product> findTop5ByOrderByPriceAsc();
 
-    List<Products> findTop8ByCategoryOrderByIdDesc(Categories categories);
+    List<Product> findTop8ByCategoryOrderByIdDesc(Category categories);
 
-    List<Products> findByNameLike(String name);
+    List<Product> findByNameLike(String name);
 
-    List<Products> findByCreateAtBetween(Date from_date, Date to_date);
+    List<Product> findByCreateAtBetween(Date from_date, Date to_date);
 
 
     @Query(nativeQuery = true, value = "SELECT * FROM products  ORDER BY id DESC LIMIT :from,20")
-    List<Products> findByProOrderByIdDesc(Integer from);
+    List<Product> findByProOrderByIdDesc(Integer from);
 }

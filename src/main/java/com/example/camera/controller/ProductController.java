@@ -1,9 +1,9 @@
 package com.example.camera.controller;
 
 import com.example.camera.dto.ProductsDTO;
-import com.example.camera.model.Brands;
-import com.example.camera.model.Categories;
-import com.example.camera.model.Products;
+import com.example.camera.model.Brand;
+import com.example.camera.model.Category;
+import com.example.camera.model.Product;
 import com.example.camera.service.BrandService;
 import com.example.camera.service.CategoryService;
 import com.example.camera.service.ProductService;
@@ -23,7 +23,7 @@ import java.sql.Date;
 import java.util.Optional;
 
 @Controller
-public class ProductsController {
+public class ProductController {
     @Autowired
     ProductService productService;
     @Autowired
@@ -47,13 +47,13 @@ public class ProductsController {
 
     @GetMapping("/editproduct/{id}")
     public String editProduct(ModelMap modelMap, @PathVariable Integer id){
-        Optional<Products> productsOptional = productService.findById(id);
+        Optional<Product> productsOptional = productService.findById(id);
         ProductsDTO productsDTO = null;
         if(productsOptional.isPresent()){
-            Products products = productsOptional.get();
+            Product products = productsOptional.get();
             modelMap.addAttribute("ProductsDTO", products);
         } else {
-            modelMap.addAttribute("ProductsDTO", new Products());
+            modelMap.addAttribute("ProductsDTO", new Product());
         }
         modelMap.addAttribute("Categories", categoryService.findAll());
         modelMap.addAttribute("Brands", brandService.findAll());
@@ -63,8 +63,8 @@ public class ProductsController {
     @PostMapping("/admin/product/insertOrUpdate")
     public String insert(ModelMap modelMap, @ModelAttribute("ProductsDTO") ProductsDTO dto, RedirectAttributes attributes){
         Integer id = dto.getId();
-        Categories category = dto.getCategory();
-        Brands brand = dto.getBrand();
+        Category category = dto.getCategory();
+        Brand brand = dto.getBrand();
         String name = dto.getName();
         String origin = dto.getOrigin();
         MultipartFile mainImg = dto.getMainImage();
@@ -75,7 +75,7 @@ public class ProductsController {
         Integer sale = dto.getSale();
         Float salePrice = price - (price*sale)/100;
         Date creatAt = new Date(System.currentTimeMillis());
-        Optional<Products> optionalProduct = productService.findById(id);
+        Optional<Product> optionalProduct = productService.findById(id);
         String mainImage = "logo2.jpg";
         String secondImage = "logo2.jpg";
         Path path = Paths.get("uploads");
@@ -97,7 +97,7 @@ public class ProductsController {
                     Files.copy(inputStream, path.resolve(secondImg.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
                     secondImage =secondImg.getOriginalFilename().toString();
                 }
-                Products product = new Products(id, category, brand, name, origin, mainImage, secondImage, price, quantity, description, sale, salePrice, creatAt);
+                Product product = new Product(id, category, brand, name, origin, mainImage, secondImage, price, quantity, description, sale, salePrice, creatAt);
                 productService.save(product);
                 attributes.addFlashAttribute("success", "Sửa thành công");
             } catch (Exception e) {
@@ -112,7 +112,7 @@ public class ProductsController {
                     Files.copy(inputStreamSecond, path.resolve(secondImg.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
                     mainImage = mainImg.getOriginalFilename().toString();
                     secondImage = secondImg.getOriginalFilename().toString();
-                    Products product = new Products(category, brand, name, origin, mainImage, secondImage, price, quantity, description, sale, salePrice, creatAt);
+                    Product product = new Product(category, brand, name, origin, mainImage, secondImage, price, quantity, description, sale, salePrice, creatAt);
                     productService.save(product);
                     attributes.addFlashAttribute("success", "Thêm thành công");
                 } catch (Exception e) {

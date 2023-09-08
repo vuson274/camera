@@ -71,7 +71,7 @@ public class LoginController {
             if (!pass.equals(optionalUser.get().getPassword())){
                 attributes.addFlashAttribute("message", "Email hoặc password không đúng");
             } else {
-                session.setAttribute("member", optionalUser.get().getUserName());
+                session.setAttribute("member", optionalUser.get());
                 return "redirect:/home";
             }
         } else {

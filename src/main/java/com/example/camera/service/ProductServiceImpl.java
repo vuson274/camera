@@ -1,8 +1,8 @@
 package com.example.camera.service;
 
-import com.example.camera.model.Categories;
-import com.example.camera.model.Products;
-import com.example.camera.repositories.ProductsRepository;
+import com.example.camera.model.Category;
+import com.example.camera.model.Product;
+import com.example.camera.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -15,20 +15,20 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService{
     @Autowired
-    ProductsRepository productRepository;
+    ProductRepository productRepository;
 
     @Override
-    public Products  save(Products entity) {
+    public Product save(Product entity) {
         return productRepository.save(entity);
     }
 
     @Override
-    public List<Products> saveAll(List<Products> entities) {
-        return (List<Products>) productRepository.saveAll(entities);
+    public List<Product> saveAll(List<Product> entities) {
+        return (List<Product>) productRepository.saveAll(entities);
     }
 
     @Override
-    public Optional<Products> findById(Integer integer) {
+    public Optional<Product> findById(Integer integer) {
         return productRepository.findById(integer);
     }
 
@@ -38,13 +38,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Iterable<Products> findAll(Pageable pageable) {
+    public Iterable<Product> findAll(Pageable pageable) {
         return productRepository.findAll(pageable);
     }
 
     @Override
-    public List<Products> findAllById(List<Integer> integers) {
-        return (List<Products>) productRepository.findAllById(integers);
+    public List<Product> findAllById(List<Integer> integers) {
+        return (List<Product>) productRepository.findAllById(integers);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void delete(Products entity) {
+    public void delete(Product entity) {
         productRepository.delete(entity);
     }
 
@@ -68,7 +68,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void deleteAll(List<Products> entities) {
+    public void deleteAll(List<Product> entities) {
         productRepository.deleteAll(entities);
     }
 
@@ -78,43 +78,43 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Iterable<Products> findAllByOrderByIdDesc() {
+    public Iterable<Product> findAllByOrderByIdDesc() {
         return productRepository.findAllByOrderByIdDesc();
     }
 
     @Override
-    public List<Products> findTop5ByOrderByIdDesc() {
+    public List<Product> findTop5ByOrderByIdDesc() {
         return productRepository.findTop5ByOrderByIdDesc();
     }
 
     @Override
-    public List<Products> findTop5ByOrderByPriceDesc() {
+    public List<Product> findTop5ByOrderByPriceDesc() {
         return productRepository.findTop5ByOrderByPriceDesc();
     }
 
     @Override
-    public List<Products> findTop5ByOrderByPriceAsc() {
+    public List<Product> findTop5ByOrderByPriceAsc() {
         return productRepository.findTop5ByOrderByPriceAsc();
     }
 
     @Override
-    public List<Products> findTop8ByCategoryOrderByIdDesc(Categories categories) {
+    public List<Product> findTop8ByCategoryOrderByIdDesc(Category categories) {
         return productRepository.findTop8ByCategoryOrderByIdDesc(categories);
     }
 
     @Override
-    public List<Products> findByNameLike(String name) {
+    public List<Product> findByNameLike(String name) {
         return productRepository.findByNameLike("%"+name+"%");
     }
 
     @Override
-    public List<Products> findByCreateAtBetween(Date from_date, Date to_date) {
+    public List<Product> findByCreateAtBetween(Date from_date, Date to_date) {
         return productRepository.findByCreateAtBetween(from_date, to_date);
     }
 
     @Override
     @Query(nativeQuery = true, value = "SELECT * FROM products  ORDER BY id DESC LIMIT :from,20")
-    public List<Products> findByProOrderByIdDesc(Integer from) {
+    public List<Product> findByProOrderByIdDesc(Integer from) {
         return productRepository.findByProOrderByIdDesc(from);
     }
 }

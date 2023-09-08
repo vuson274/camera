@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{homeCms}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <div class="row" layout:fragment="content">
+  <div class="col-lg-12">
+    <h2>KHÁCH HÀNG</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover" id="bang">
+        <thead class="table">
+        <tr>
+          <th>Stt</th>
+          <th>Tên</th>
+          <th>Email</th>
+          <th>Số điện thoại</th>
+          <th>Địa chỉ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer, state :${listCustomer}">
+          <td th:utext="${state.count}"></td>
+          <td th:utext="${customer.name}"></td>
+          <td th:utext="${customer.email}"></td>
+          <td th:utext="${customer.phone}"></td>
+          <td th:utext="${customer.address}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

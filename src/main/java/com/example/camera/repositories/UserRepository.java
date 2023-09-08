@@ -2,7 +2,6 @@ package com.example.camera.repositories;
 
 import com.example.camera.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 import java.sql.Date;
 import java.util.List;

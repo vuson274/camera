@@ -1,6 +1,6 @@
 package com.example.camera.controller;
 
-import com.example.camera.model.Categories;
+import com.example.camera.model.Category;
 import com.example.camera.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,16 +13,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
-public class CategoriesController {
+public class CategoryController {
    @Autowired
-    CategoryService categoryService;
+   CategoryService categoryService;
     @GetMapping("/admin/categories")
     public String listCategories(ModelMap modelMap){
         modelMap.addAttribute("categories", categoryService.findAll());
         return "categoriesCms";
     }
     @PostMapping("/admin/categories/insert")
-    public String insertCategory(ModelMap modelMap, @ModelAttribute("category") Categories categories , BindingResult bindingResult, RedirectAttributes attributes) {
+    public String insertCategory(ModelMap modelMap, @ModelAttribute("category") Category categories , BindingResult bindingResult, RedirectAttributes attributes) {
         if (bindingResult.hasErrors()){
             return "redirect:/admin/categories" ;
         }
@@ -37,7 +37,7 @@ public class CategoriesController {
     }
 
     @PostMapping("/admin/categories/update")
-    public String updateCategory(ModelMap modelMap, @ModelAttribute("categories") Categories categories, RedirectAttributes attributes){
+    public String updateCategory(ModelMap modelMap, @ModelAttribute("categories") Category categories, RedirectAttributes attributes){
        try{
            modelMap.addAttribute("category",categories);
            categoryService.save(categories);

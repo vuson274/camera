@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{homeCms}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Moon Light</title>
+  <style>
+    .table th {
+
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="row">
+      <div class="col-md-12 ">
+        <h2>ĐƠN HÀNG</h2>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover" id="bang">
+            <thead class="table">
+            <tr>
+              <th>Stt</th>
+              <th>Tên người nhận</th>
+              <th>Mã đơn hàng</th>
+              <th>Ngày đặt hàng</th>
+              <th>Chi tiết</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order, state : ${listOrder}">
+              <td th:text="${state.count}"></td>
+              <td th:text="${order.customer.name}"></td>
+              <td th:text="${order.keyToken}"></td>
+              <td th:text="${order.createAt}"></td>
+              <td style="text-align: center; color: blue;">
+                <a th:href="@{/order_detail/{id}(id = ${order.id})}"><i class="fa fa-eye fa-2x" style="color: #337ab7;"></i></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

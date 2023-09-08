@@ -1,73 +1,55 @@
-$(document).on('click', '.del-cart  ', function(e){
-    e.preventDefault();
-    var id = $(this).val(); // id sản phẩm
+$(document).on("click",".del-cart", function(e){
+    var id = $(this).attr('id');
+    $.get('/delCart',{id: id},function(data){
+        $("#total-price").load(' .total-price');
+        $("#cart").load(' #data-cart');
+        $("#carts").load(' #bag-carts');
+        $('body').load('index.php?page=shop-cart');
+    });
+});
 
-    $.ajax({
-        url         : 'assets/ajax/del-cart.php',
-        type        : 'post',
-        dataType    : 'html',
-        data        : { id : id },
 
-        success : function(data){
-            
-        	$("#total-price").load(' .total-price');
-            $("#cart").load(' #data-cart');
-            $("#carts").load(' #bag-carts');
-            $('body').load('index.php?page=shop-cart');
-        },
-
-        error : function(){
-            
-        }
+$(document).on('click', '.inc', function(){
+    var qty  = new Number($(this).attr('name'));
+    qty +=1;
+    var id = $(this).attr('id');
+    $.get('/updateCart',{id: id, qty : qty },function(data){
+        $("#cart").load(' #data-cart');
+        $("#total-price").load(' .total-price');
     });
 
 });
 
-
-$(document).on('change', '.update-cart', function(){
-    var qty  = $(this).val();
-    var id = $(this).attr('name');
-
-    $.ajax({
-        url         : 'assets/ajax/update.php',
-        type        : 'post',
-        dataType    : 'html',
-        data        : { id : id, qty : qty },
-
-        success : function(data){
-            $("#cart").load(' #data-cart');
-            $("#total-price").load(' .total-price');
-        },
-
-        error : function(){
-            
-        }
+$(document).on('click', '.dec', function(){
+    var qty  = new Number($(this).attr('name'));
+    qty -=1;
+    var id = $(this).attr('id');
+    $.get('/updateCart',{id: id, qty : qty },function(data){
+        $("#cart").load(' #data-cart');
+        $("#total-price").load(' .total-price');
+        $("#test").load('.test1');
     });
+
 });
+
 
 
 $(document).on("click",".order", function(e){
     var id = $(this).attr('id');
-    var action = "add";
-    // alert (id);
-    $.post('assets/ajax/order.php',{id: id, action: action},function(data){
-
+    $.get('/addCart',{id: id},function(data){
         $("#carts").load(' #bag-carts');
         $('.notiProduct').slideDown('fast');
-        $('.notiProduct').delay(10000).slideUp('fast');
+        $('.notiProduct').delay(2000).slideUp('fast');
     });
 });
 
 
 $(document).on("click",".cart-btn", function(e){
     var id = $(this).attr('id');
-    var action = "add_detail";
-    // alert (id);
-    $.post('assets/ajax/order.php',{id: id, action: action},function(data){
-
+    $.get('/addCart',{id: id},function(data){
         $("#carts").load(' #bag-carts');
         $('.notiProduct').slideDown('fast');
-        $('.notiProduct').delay(10000).slideUp('fast');
+        $('.notiProduct').delay(2000).slideUp('fast');
     });
 });
 
@@ -83,7 +65,7 @@ $(document).on('click','.heart',function(e){
         success : function(data){
             $("#heart").load(' #like');
             $('.favorite_list').slideDown('fast');
-            $('.favorite_list').delay(10000).slideUp('fast');
+            $('.favorite_list').delay(2000).slideUp('fast');
         },
         error : function(data){
         }
@@ -100,7 +82,7 @@ $(document).on('click','.delete',function(e){
         data        : { id : id },
         success : function(data){
             $("#heart").load(' #like');
-            $('body').load('index.php?page=favorite')
+            $('body').load('/favoriteList')
         },
         error : function(data){
         }
@@ -190,7 +172,6 @@ $(document).on('keyup','#search_input',function(e){
 //         }
 //     });
 // });
-
 $(document).on('click','.cart-btn',function(e){
     $('#detail').modal('hide');
 });

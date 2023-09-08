@@ -18,9 +18,17 @@ public class Customer {
     private String email;
     private String address;
     @OneToMany(mappedBy = "customer")
-    private List<Orders> orders;
+    private List<Order> orders;
     private Date createAt;
 
     public Customer() {
+    }
+
+    public Customer(String name, String phone, String email, String address, Date createAt) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.createAt = createAt;
     }
 }

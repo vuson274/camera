@@ -1,32 +1,32 @@
 package com.example.camera.service;
 
-import com.example.camera.model.Categories;
+import com.example.camera.model.Category;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CategoryService {
-    Categories save(Categories entity);
+    Category save(Category entity);
 
-    List<Categories> saveAll(List<Categories> entities);
+    List<Category> saveAll(List<Category> entities);
 
-    Optional<Categories> findById(Integer integer);
+    Optional<Category> findById(Integer integer);
 
     boolean existsById(Integer integer);
 
-    Iterable<Categories> findAll();
+    Iterable<Category> findAll();
 
-    List<Categories> findAllById(List<Integer> integers);
+    List<Category> findAllById(List<Integer> integers);
 
     long count();
 
     void deleteById(Integer integer);
 
-    void delete(Categories entity);
+    void delete(Category entity);
 
     void deleteAllById(List<Integer> integers);
 
-    void deleteAll(List<Categories> entities);
+    void deleteAll(List<Category> entities);
 
     void deleteAll();
 }

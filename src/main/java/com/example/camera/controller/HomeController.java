@@ -1,6 +1,7 @@
 package com.example.camera.controller;
 
-import com.example.camera.model.Products;
+import com.example.camera.model.Customer;
+import com.example.camera.model.Product;
 import com.example.camera.service.CategoryService;
 import com.example.camera.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class HomeController {
     @GetMapping("/home")
     public String home(ModelMap modelMap, @RequestParam("p") Optional<Integer> p){
         Pageable pageable = PageRequest.of(p.orElse(0), 20, Sort.by("id").descending());
-        Page<Products> page = (Page<Products>) productService.findAll(pageable);
+        Page<Product> page = (Page<Product>) productService.findAll(pageable);
         modelMap.addAttribute("listCategories", categoryService.findAll());
         modelMap.addAttribute("page",Math.ceil(productService.count()/20));
         modelMap.addAttribute("listProducts", page);
@@ -52,7 +53,7 @@ public class HomeController {
     public String shop(ModelMap modelMap, @RequestParam("p") Optional<Integer> p){
         modelMap.addAttribute("page",Math.ceil(productService.count()/20));
         Pageable pageable = PageRequest.of(p.orElse(0), 20, Sort.by("id").descending());
-        Page<Products> page = (Page<Products>) productService.findAll(pageable);
+        Page<Product> page = (Page<Product>) productService.findAll(pageable);
         modelMap.addAttribute("listProducts", page);
         modelMap.addAttribute("listCategories", categoryService.findAll());
         return "shop";
@@ -66,6 +67,16 @@ public class HomeController {
     @GetMapping("/favoriteList")
     public String favoriteProduct(){
         return "favoriteList";
+    }
+
+    @GetMapping("/shopCart")
+    public String shopCart(){
+        return "shopCart";
+    }
+
+    @GetMapping("/checkout")
+    public String checkout(){
+        return "checkOut";
     }
 
 }

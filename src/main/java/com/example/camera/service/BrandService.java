@@ -1,32 +1,32 @@
 package com.example.camera.service;
 
-import com.example.camera.model.Brands;
+import com.example.camera.model.Brand;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface BrandService {
-    Brands save(Brands entity);
+    Brand save(Brand entity);
 
-    List<Brands> saveAll(List<Brands> entities);
+    List<Brand> saveAll(List<Brand> entities);
 
-    Optional<Brands> findById(Integer integer);
+    Optional<Brand> findById(Integer integer);
 
     boolean existsById(Integer integer);
 
-    Iterable<Brands> findAll();
+    Iterable<Brand> findAll();
 
-    List<Brands> findAllById(List<Integer> integers);
+    List<Brand> findAllById(List<Integer> integers);
 
     long count();
 
     void deleteById(Integer integer);
 
-    void delete(Brands entity);
+    void delete(Brand entity);
 
     void deleteAllById(List<Integer> integers);
 
-    void deleteAll(List<Brands> entities);
+    void deleteAll(List<Brand> entities);
 
     void deleteAll();
 }

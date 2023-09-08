@@ -445,6 +445,8 @@ $(document).ready(function(){
                 success:function(data)
                 {
                     $('#pro').html('<div className="huge" style="font-size: 40px;">'+data[0]+'</div><div>Product </div>');
+                    $('#total').html('<div className="huge" style="font-size: 40px;">'+data[3]+'</div><div>Revenue</div>');
+                    $('#order').html('<div className="huge" style="font-size: 40px;">'+data[2]+'</div><div>Orders</div>');
                     $('#member').html('<div className="huge" style="font-size: 40px;">'+data[1]+'</div><div>Member </div>');
                 }
             });

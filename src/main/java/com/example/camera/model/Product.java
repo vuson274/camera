@@ -11,34 +11,32 @@ import java.util.Set;
 @Entity
 @Table(name = "Products")
 @Data
-public class Products {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
-    private Categories category;
+    private Category category;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
-    private Brands brand;
+    private Brand brand;
     private String name;
     private String origin;
     private String mainImage;
     private String secondImage;
-    private float price;
+    private Float price;
     private int quantity;
     @Size(max = 5000)
     private String description;
     private int sale;
     private float salePrice;
-    @ManyToMany(mappedBy = "products")
-    private Set<Orders> orders = new HashSet<Orders>();
     private Date createAt;
 
-    public Products() {
+    public Product() {
     }
 
-    public Products(int id, String name, String mainImage, float price, String description, float salePrice) {
+    public Product(int id, String name, String mainImage, float price, String description, float salePrice) {
         this.id = id;
         this.name = name;
         this.mainImage = mainImage;
@@ -47,7 +45,7 @@ public class Products {
         this.salePrice = salePrice;
     }
 
-    public Products(Categories category, Brands brand, String name, String origin, String mainImage, String secondImage, float price, int quantity, String description, int sale, float salePrice, Date createAt) {
+    public Product(Category category, Brand brand, String name, String origin, String mainImage, String secondImage, float price, int quantity, String description, int sale, float salePrice, Date createAt) {
         this.category = category;
         this.brand = brand;
         this.name = name;
@@ -62,7 +60,7 @@ public class Products {
         this.createAt = createAt;
     }
 
-    public Products(int id, Categories category, Brands brand, String name, String origin, String mainImage, String secondImage, float price, int quantity, String description, int sale, float salePrice, Date createAt) {
+    public Product(int id, Category category, Brand brand, String name, String origin, String mainImage, String secondImage, float price, int quantity, String description, int sale, float salePrice, Date createAt) {
         this.id = id;
         this.category = category;
         this.brand = brand;

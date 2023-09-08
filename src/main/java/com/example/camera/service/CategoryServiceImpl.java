@@ -1,7 +1,7 @@
 package com.example.camera.service;
 
-import com.example.camera.model.Categories;
-import com.example.camera.repositories.CategoriesRepository;
+import com.example.camera.model.Category;
+import com.example.camera.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,22 +9,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     @Autowired
-    CategoriesRepository categoriesRepository;
+    CategoryRepository categoriesRepository;
 
     @Override
-    public Categories save(Categories entity) {
+    public Category save(Category entity) {
         return categoriesRepository.save(entity);
     }
 
     @Override
-    public List<Categories> saveAll(List<Categories> entities) {
-        return (List<Categories>) categoriesRepository.saveAll(entities);
+    public List<Category> saveAll(List<Category> entities) {
+        return (List<Category>) categoriesRepository.saveAll(entities);
     }
 
     @Override
-    public Optional<Categories> findById(Integer integer) {
+    public Optional<Category> findById(Integer integer) {
         return categoriesRepository.findById(integer);
     }
 
@@ -34,13 +34,13 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Iterable<Categories> findAll() {
+    public Iterable<Category> findAll() {
         return categoriesRepository.findAll();
     }
 
     @Override
-    public List<Categories> findAllById(List<Integer> integers) {
-        return (List<Categories>) categoriesRepository.findAllById(integers);
+    public List<Category> findAllById(List<Integer> integers) {
+        return (List<Category>) categoriesRepository.findAllById(integers);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void delete(Categories entity) {
+    public void delete(Category entity) {
         categoriesRepository.delete(entity);
     }
 
@@ -64,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void deleteAll(List<Categories> entities) {
+    public void deleteAll(List<Category> entities) {
         categoriesRepository.deleteAll(entities);
     }
 

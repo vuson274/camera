@@ -1,7 +1,7 @@
 package com.example.camera.service;
 
-import com.example.camera.model.Brands;
-import com.example.camera.repositories.BrandsRepository;
+import com.example.camera.model.Brand;
+import com.example.camera.repositories.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,22 +9,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BrandServiceImpl implements BrandService{
+public class BrandServiceImpl implements BrandService {
     @Autowired
-    BrandsRepository brandsRepository;
+    BrandRepository brandsRepository;
 
     @Override
-    public  Brands save(Brands entity) {
+    public Brand save(Brand entity) {
         return brandsRepository.save(entity);
     }
 
     @Override
-    public List<Brands> saveAll(List<Brands> entities) {
-        return (List<Brands>) brandsRepository.saveAll(entities);
+    public List<Brand> saveAll(List<Brand> entities) {
+        return (List<Brand>) brandsRepository.saveAll(entities);
     }
 
     @Override
-    public Optional<Brands> findById(Integer integer) {
+    public Optional<Brand> findById(Integer integer) {
         return brandsRepository.findById(integer);
     }
 
@@ -34,13 +34,13 @@ public class BrandServiceImpl implements BrandService{
     }
 
     @Override
-    public Iterable<Brands> findAll() {
+    public Iterable<Brand> findAll() {
         return brandsRepository.findAll();
     }
 
     @Override
-    public List<Brands> findAllById(List<Integer> integers) {
-        return (List<Brands>) brandsRepository.findAllById(integers);
+    public List<Brand> findAllById(List<Integer> integers) {
+        return (List<Brand>) brandsRepository.findAllById(integers);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class BrandServiceImpl implements BrandService{
     }
 
     @Override
-    public void delete(Brands entity) {
+    public void delete(Brand entity) {
         brandsRepository.delete(entity);
     }
 
@@ -64,7 +64,7 @@ public class BrandServiceImpl implements BrandService{
     }
 
     @Override
-    public void deleteAll(List<Brands> entities) {
+    public void deleteAll(List<Brand> entities) {
         brandsRepository.deleteAll(entities);
     }
 

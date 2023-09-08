@@ -2364,7 +2364,7 @@ ol {
 }
 
 .checkout__form h5 {
-  color: #111111;
+  color: #fff;
   font-weight: 600;
   text-transform: uppercase;
   border-bottom: 1px solid #e1e1e1;
@@ -2373,7 +2373,7 @@ ol {
 }
 
 .checkout__form .checkout__form__input p {
-  color: #444444;
+  color: #fff3cd;
   font-weight: 500;
   margin-bottom: 10px;
 }
@@ -3212,14 +3212,16 @@ ol {
   padding: 10px;
   text-align: center;
   border-radius: 10px;
-  background-color: #b2dfdb;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .notiProduct-item p {
   margin: 0px;
   padding-bottom: 10px;
   font-size: 18px;
-  color: #000;
+  color: #fff3cd;
 }
 
 .notiProduct-item a {
@@ -3244,18 +3246,23 @@ ol {
 }
 
 .noti_listProduct {
-  background-color: #b2dfdb;
+  background-color: rgba(255, 255, 255, 0);
   text-align: center;
   margin: 50px 0px;
   border-radius: 20px;
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.noti_listProduct h2 {
-  padding: 20px 0px;
-}
+/*.noti_listProduct h2 {*/
+/*  padding: 20px 0px;*/
+/*}*/
 
 .noti_listProduct h4 {
+  padding-top: 30px;
   padding-bottom: 20px;
+  color: #fff3cd;
 }
 
 .noti_listProduct .link {

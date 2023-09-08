@@ -10,21 +10,20 @@ import java.util.Set;
 @Entity
 @Table(name = "Orders")
 @Data
-public class Orders {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
-    private float totalPrice;
+    private double totalPrice;
     private String note;
     private String keyToken;
     private int payMethod;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "order_detail", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Products> products = new HashSet<Products>();
     private Date createAt;
     private int status;
 
+    public Order() {
+    }
 }

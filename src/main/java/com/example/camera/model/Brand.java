@@ -2,20 +2,18 @@ package com.example.camera.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.sql.Date;
-
-
 @Entity
-@Table(name = "Categories")
+@Table(name = "Brands")
 @Data
-public class Categories {
+public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private Date createAt;
 
-    public Categories() {
+    public Brand() {
     }
-
 }

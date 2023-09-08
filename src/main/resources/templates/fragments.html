@@ -32,10 +32,10 @@
         <ul class="offcanvas__widget">
             <li><span class="icon_search search-switch"></span></li>
             <li><a href="#"><span class="icon_heart_alt"></span>
-                    <div class="tip">2</div>
+                    <div class="tip" th:if="${session.myLikeItems}" th:text="${session.myLikeNum}"></div>
                 </a></li>
             <li><a href="#"><span class="icon_bag_alt"></span>
-                <div class="tip">2</div>
+                <div class="tip" th:if="${session.myCartItems}" th:text="${session.myCartNum}"></div>
             </a></li>
         </ul>
         <div class="offcanvas__logo">
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="offcanvas__auth">
-            <a href="#">Login</a>
+            <a th:href="@{/login}">Login</a>
         </div>
     </div>
     <!-- Header Section Begin -->
@@ -82,7 +82,7 @@
                         </div>
                         <ul class="header__right__widget">
                             <li  th:if="${session.member}">
-                                <a href="#" th:text="${session.member}" style="color: #fff;"></a>
+                                <a href="#" th:text="${session.member.userName}" style="color: #fff;"></a>
                                 <ul>
                                     <li><a th:href="@{/logoutMember}" onclick ="return confirm ('bạn có thật sự muốn đăng xuất?');">Đăng xuất</a></li>
                                 </ul>
@@ -98,10 +98,10 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a th:href="@{/shopCart}">
                                     <span class="icon_bag_alt" style="color: #fff"></span>
                                     <div id="carts">
-                                        <div class="tip" id="bag-carts">2</div>
+                                        <div class="tip" id="bag-carts" th:if="${session.myCartItems}" th:text="${session.myCartNum}"></div>
                                     </div>
                                 </a>
                             </li>
@@ -115,6 +115,18 @@
         </div>
         </div>
     </header>
+    <section class="favorite_list">
+        <div class="notiProduct-item addCart-alert-animate">
+            <p>Đã thêm vào danh sách yêu thích </p>
+            <a th:href="@{/favoriteList}" class="btn-hover-dark">Xem danh sách</a>
+        </div>
+    </section>
+    <section class="notiProduct">
+    <div class="notiProduct-item addCart-alert-animate">
+        <p>Đã thêm vào giỏ hàng!</p>
+        <a th:href="@{/shopCart}" class="btn-hover-dark">Vào giỏ hàng</a>
+    </div>
+    </section>
     <section class="bg1">
     <!-- Header Section End -->
     <div layout:fragment="content">
@@ -203,7 +215,7 @@
             </div>
         </div>
     </div>
-
+</section>
     <th:block>
         <script th:src="@{../web/js/jquery-3.3.1.min.js}"></script>
         <script th:src="@{../web/js/bootstrap.min.js}"></script>
